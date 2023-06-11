@@ -6,5 +6,5 @@ In this repo, we used both the pretrained resnet and created a resnet from scrat
 The datasets used are publicly available on kaggle.
 
 `` Download the model from this link : ``
-[YogaClassification.h5](https://drive.google.com/drive/folders/1cBqOPLB8ysHFaS1x__KZjlumiOodvlZc?usp=sharing) 
+[YogaClassification.h5](https://drive.google.com/drive/folders/1cBqOPLB8ysHFaS1x__KZjlumiOodvlZc?usp=sharing) <br />
 `` and put it in the static folder "./Yoga-classifcation/Yoga/app/static" ``
