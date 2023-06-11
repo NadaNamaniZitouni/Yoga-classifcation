@@ -1,0 +1,123 @@
+{% load static %}
+
+<html>
+<head>
+    <title>Yoga Classification - Intellectia</title>
+    <link rel="icon" type="image/png" href="{% static 'logo.png' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body{
+            background-color: aliceblue;
+            max-height: 80vh; 
+            max-width: 98vw;
+            overflow-y: auto; 
+        }
+        img{
+            width: 512px;
+            height: 512px;
+            max-width: 100vw;
+            max-height: 100vh;
+            position: inherit;
+        }
+
+        div{
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1{
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        p{
+            font-family: 'Didot';
+            color: black;
+            font-size: 20px;
+        }
+
+        #logo{
+            width: 230px;
+            height: 130px;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+    <img src="{% static 'logo.png' %}" id="logo" class="mt-2">
+    <div class="col mt-2 ms-5">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="image" class="mt-3">Choose an image to classify:</label>
+            <input type="file" class="form-control form-control-lg mt-2" id="imageInput" name="image" onchange="previewImage(event)" accept="image/*">
+            {% if image == None %}
+                <center><img class="img-thumbnail mt-3" id="preview" src='#' alt="Preview" style="display: none;"></center>
+            {% else %}
+                <center><img class="img-thumbnail mt-3" id="preview" src="{% static 'img/' %}{{image}}" alt="Preview"></center>
+            {% endif %}
+                <center><button type="submit" class="btn btn-primary w-25 mt-3 centered" value="Classify">Submit</button></center>
+        </form>
+    </div>
+    <div class="col mt-2 me-5">
+        <h1>Classification result:</h1>
+        <p class="h1">{{ prediction }}</p>
+        <br>
+        {% if prediction == 'downdog' %}
+            <p>Downward Facing Dog (Adho Mukha Svanasana): Start on all fours with hands shoulder-width apart and knees hip-width apart. 
+                Press through the palms and lift the hips up and back, forming an inverted "V" shape. Keep the arms and legs straight, 
+                heels reaching toward the ground. Downward Facing Dog stretches the entire body, particularly the back, shoulders, and 
+                hamstrings. It strengthens the arms and legs while also improving balance and focus.
+            </p>
+        {% elif prediction == 'goddess' %}
+            <p>Goddess Pose (Utkata Konasana): Stand with feet wider than hip-width apart, toes pointing outward. Bend the knees and sink 
+                the hips down, keeping the chest lifted and the spine long. Bring the arms out to the sides, parallel to the ground. 
+                Goddess Pose opens the hips and chest, strengthens the legs, and builds stability and inner strength.</p>
+        {% elif prediction == 'mountain' %}
+            <p>Mountain Pose (Tadasana): Stand tall with feet together or hip-width apart, grounding through the feet. 
+                Align the body with a straight spine, relaxed shoulders, and arms by the sides. Mountain Pose promotes stability, 
+                good posture, and body awareness. It is a foundational pose for many standing poses and a starting point for meditation.
+            </p>
+        {% elif prediction == 'tree' %}
+            <p>Tree Pose (Vrikshasana): Begin in Mountain Pose. Shift the weight onto one foot, then bend the opposite knee and place 
+                the sole of the foot on the inner thigh or calf (avoid the knee joint). Bring the hands together at the heart center or 
+                reach them overhead. Tree Pose improves balance, strengthens the legs, and promotes focus and concentration.
+            </p>
+        {% elif prediction == 'warrior1' %}
+            <p>Warrior I (Virabhadrasana I): From a standing position, step one foot back and turn it slightly inward, keeping the front 
+                foot facing forward. Bend the front knee and raise the arms overhead, palms facing each other. Warrior I stretches the hips, 
+                thighs, and chest while building strength in the legs and core. It promotes stability, focus, and groundedness.
+            </p>
+        {% elif prediction == 'warrior2' %}
+            <p>Warrior II (Virabhadrasana II): From Warrior I, open the hips and arms wide to the sides, parallel to the ground. 
+                The front heel should align with the back foot's arch. Keep the front knee bent and gaze forward. Warrior II strengthens 
+                the legs, opens the hips and chest, and improves balance and stamina. It also cultivates a sense of strength and determination.
+            </p>
+        {% endif %}
+    </div>
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script>
+    function previewImage(event) {
+        var input = event.target;
+        var preview = document.getElementById('preview');
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+</html>
